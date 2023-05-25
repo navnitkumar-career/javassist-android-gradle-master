@@ -16,6 +16,7 @@
 
 package com.mingyuans.javassist.javassist.tools.rmi;
 
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.*;
 
 import com.mingyuans.javassist.javassist.CannotCompileException;
@@ -148,6 +149,7 @@ public class AppletServer extends Webserver {
         throws IOException
     {
         ObjectInputStream in = new ObjectInputStream(ins);
+        ObjectInputFilters.enableObjectFilterIfUnprotected(in);
 
         int objectId = in.readInt();
         int methodId = in.readInt();
@@ -225,6 +227,7 @@ public class AppletServer extends Webserver {
         throws IOException
     {
         ObjectInputStream in = new ObjectInputStream(ins);
+        ObjectInputFilters.enableObjectFilterIfUnprotected(in);
         String name = DataInputStream.readUTF(in);
         ExportedObject found = (ExportedObject)exportedNames.get(name);
         outs.write(okHeader);
