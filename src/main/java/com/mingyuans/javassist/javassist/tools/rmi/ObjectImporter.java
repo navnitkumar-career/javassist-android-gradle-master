@@ -17,6 +17,7 @@
 package com.mingyuans.javassist.javassist.tools.rmi;
 
 import com.mingyuans.javassist.javassist.tools.web.Viewer;
+import io.github.pixee.security.ObjectInputFilters;
 
 import java.io.*;
 import java.net.*;
@@ -168,6 +169,7 @@ public class ObjectImporter implements Serializable {
             InputStream in = new BufferedInputStream(sock.getInputStream());
             skipHeader(in);
             ObjectInputStream din = new ObjectInputStream(in);
+            ObjectInputFilters.enableObjectFilterIfUnprotected(din);
             int n = din.readInt();
             String classname = din.readUTF();
             din.close();
@@ -240,6 +242,7 @@ public class ObjectImporter implements Serializable {
             InputStream ins = new BufferedInputStream(sock.getInputStream());
             skipHeader(ins);
             ObjectInputStream din = new ObjectInputStream(ins);
+            ObjectInputFilters.enableObjectFilterIfUnprotected(din);
             result = din.readBoolean();
             rvalue = null;
             errmsg = null;
