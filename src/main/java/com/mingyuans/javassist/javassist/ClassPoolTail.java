@@ -16,6 +16,8 @@
 
 package com.mingyuans.javassist.javassist;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.*;
 import java.util.jar.*;
 import java.net.MalformedURLException;
@@ -155,7 +157,7 @@ final class JarClassPath implements ClassPath {
         JarEntry je = jarfile.getJarEntry(jarname);
         if (je != null)
             try {
-                return new URL("jar:" + jarfileURL + "!/" + jarname);
+                return Urls.create("jar:" + jarfileURL + "!/" + jarname, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             }
             catch (MalformedURLException e) {}
 
