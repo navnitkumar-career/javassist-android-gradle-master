@@ -16,6 +16,8 @@
 
 package com.mingyuans.javassist.javassist.tools.web;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.*;
 import java.net.*;
 
@@ -161,8 +163,7 @@ public class Viewer extends ClassLoader {
     protected byte[] fetchClass(String classname) throws Exception
     {
         byte[] b;
-        URL url = new URL("http", server, port,
-                          "/" + classname.replace('.', '/') + ".class");
+        URL url = Urls.create("http", server, port, "/" + classname.replace('.', '/') + ".class", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         URLConnection con = url.openConnection();
         con.connect();
         int size = con.getContentLength();
