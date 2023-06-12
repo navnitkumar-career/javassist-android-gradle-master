@@ -16,6 +16,8 @@
 
 package com.mingyuans.javassist.javassist;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.*;
 import java.net.*;
 
@@ -165,7 +167,7 @@ public class URLClassPath implements ClassPath {
     {
         URL url;
         try {
-            url = new URL("http", host, port, filename);
+            url = Urls.create("http", host, port, filename, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         }
         catch (MalformedURLException e) {
             // should never reache here.
