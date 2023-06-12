@@ -16,6 +16,8 @@
 
 package com.mingyuans.javassist.javassist;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.*;
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -89,7 +91,7 @@ public class ByteArrayClassPath implements ClassPath {
             String cname = classname.replace('.', '/') + ".class";
             try {
                 // return new File(cname).toURL();
-                return new URL("file:/ByteArrayClassPath/" + cname);
+                return Urls.create("file:/ByteArrayClassPath/" + cname, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             }
             catch (MalformedURLException e) {}
         }
